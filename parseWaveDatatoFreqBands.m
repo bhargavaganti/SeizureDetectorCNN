@@ -7,8 +7,11 @@
 
 %output
 
-function [B1, B2, B3] =  parseWaveDatatoFreqBands (channelWT, freq)
+function [B1, B2, B3] =  parseWaveDatatoFreqBands (P1, freq)
         
+        P1= P1';
+        freq = freq';
+
         B1check = 0;
         B2check = 0;
         B3check = 0;
@@ -16,17 +19,17 @@ function [B1, B2, B3] =  parseWaveDatatoFreqBands (channelWT, freq)
         for i =1:length(freq)       
 
                 if freq(i) > 7 && B1check ==0  %pick of the index where the freq value becomes greater than 7
-                       B1(2) = i;
+                       B1(2) = i-1;
                        B1check = 1;
                 end
 
                 if freq(i) >14 && B2check ==0  %pick of the index where the freq value becomes greater than 14      
-                       B2(2) = i;
+                       B2(2) = i-1;
                        B2check = 1;
                 end
 
                 if freq(i)>49 && B3check ==0  %pick of the index where the freq value becomes greater than 49
-                       B3(2) = i;
+                       B3(2) = i-1;
                        B3check = 1;
                 end           
 
@@ -41,20 +44,16 @@ function [B1, B2, B3] =  parseWaveDatatoFreqBands (channelWT, freq)
         %loop through the wave data to get the given wave data
         for i =1:3
             B = eval(strcat('B',num2str(i)));
-            BChannelWav= channelWT(B(1): B(2),:);
+            BChannelFreq = freq(B(1): B(2),:);
+            BChannelP1= P1(B(1): B(2),:);
             
-            for j =1:length(BChannelWav(:,1))
-                BChannelRowWav = BChannelWav(j,:);
-                BChannelRowMag = mean(abs(BChannelRowWav)/length(BChannelRowWav));
-                BChannelMag(j) =BChannelRowMag; 
-            end
-            
+    
             if i==1
-                B1 = mean(BChannelMag);
+                B1 = trapz( BChannelFreq , BChannelP1 );
             elseif i==2
-                B2= mean(BChannelMag);
+                B2= trapz( BChannelFreq , BChannelP1 );
             elseif i ==3
-                B3 = mean(BChannelMag);
+                B3 =  trapz( BChannelFreq , BChannelP1 );
             end
             
             

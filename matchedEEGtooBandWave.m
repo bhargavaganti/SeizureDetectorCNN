@@ -16,12 +16,6 @@
 
 function [B1, B2 B3] =  matchedEEGtooBandWave(matchedEEGData, fs)
 
-    for i  %this will represent the number of channels in the matched EEG data sete
-        [channelWT, freq ] = cwt(eegChannel, fs)
-        freq = flipud(freq); %flip the direction of the array for accesnding order of frequncy of the frequncy array
-        [B1ChannelMag, B2ChannelMag, B3ChannelMag] =  parseWaveDatatoFreqBands (channelWT, freq)  ;
-        
-    
-    end
+
 
 end

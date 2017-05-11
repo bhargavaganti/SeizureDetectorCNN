@@ -5,7 +5,7 @@
 
 
 %Input 
-%Raw EEG data(18-24 channels
+%Raw EEG data(18-24 channels)
 %Raw EEG data signal labels
 %eeg labeled 2d projections
 
@@ -13,18 +13,42 @@
 %Spatial representation of the EEG data
 
 
-function [spatialRep] =  eegDatatooSpatialRep (eegDataRawdata, eegSignalLabels, eeg2Dproj)
+function [epochImage ] =  eegDatatooSpatialRep (eegDataRawdata, eegSignalLabels, eeg2Dproj, matchedIndicies)
 
-fs=500; %Hz sampling rate of the EEG data 
+Fs=500; %Hz sampling rate of the EEG data 
+
 
 %% Match the data from the EEG to the channel 2d proj map
-[matchedEEGData] = matchRawEEGtoChannelMap(
+%[matchedEEGData] = matchRawEEGtoChannelMap(eegDataRawdata, matchedIndicies)
+%for now pull the first 21 channels of the data
+matchedEEGData1 = data(1:19,1:500);
+matchedEEGData2 = data(23:24,1:500);
+matchedEEGData =   vertcat(matchedEEGData1, matchedEEGData2);
 
-%% Wavelet transform of the data channels
-%BN will reprsent a magnitude by channel matrix
-[B1, B2 B3] = matchedEEGtooBandWave(matchedEEGData, fs)
+%% Loop through each of the channels in the matched data
+for i =1:length(matchedEEGData(:,1))
+    
+     %Grab the current channel
+        eegChannel = matchedEEGData(i,:);
+    
+     %Power Spectrum of current channel
+        Y = fft(eegChannel);
+        L = 500; % 1second epoch of data
+        P2 = abs(Y/L);
+        P1 = P2(1:L/2+1);
+        P1(2:end-1) = 2*P1(2:end-1);
+        freq = Fs*(0:(L/2))/L;
 
-%%  Interpolate EEG data to spatial map 
+    %% fourier transform of the data channels
+    %BN will reprsent a magnitude by channel matrix
+    [B1channel, B2channel, B3channel] =  parseWaveDatatoFreqBands (P1, freq);
 
+    B1(i) = B1channel;
+    B2(i) = B2channel;
+    B3(i) = B3channel;
+end
+
+ %%  Interpolate EEG data to spatial map 
+    [epochImage ] = spatialInterpolation (eeg2Dproj,, B1, B2, B3 );
 
 end
