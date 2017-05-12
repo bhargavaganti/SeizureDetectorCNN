@@ -5,7 +5,7 @@
 
 %%  Load meta data related to epilepsy data
 Fs = 500; 
-load('MetaData/matchedCoords.mat');
+spatialCoords = load('MetaData/matchedCoords.mat');
 
 
 %% Have to spilt the raw data file into epochs for parsing
@@ -13,7 +13,7 @@ load('MetaData/matchedCoords.mat');
 
     for j =  1:(length(data)/500) %this corrponds to the overall length of the data being put in
         
-        endIndex = j * 500; 
+        endInedex = j * 500; 
         startIndex= endIndex - 499; 
        
         
@@ -22,13 +22,11 @@ load('MetaData/matchedCoords.mat');
         matchedEEGData2 = data(23:24,startIndex:endIndex); %  23-24 also correspond to channels being pulled
         matchedEEGData =   vertcat(matchedEEGData1, matchedEEGData2);
 
-        [epochImage] =  eegEpochtoSpatial (matchedEEGData, matchedCoords, Fs);
+        [epochImage] =  eegDatatooSpatialRep (matchedEEGData, spatialCoords, Fs);
         
-         figure
-         hold on
-         imshow(epochImage)
+         figure(1)
+         h
          
         
         allEpochImages{j} = epochImage;
-        
     end

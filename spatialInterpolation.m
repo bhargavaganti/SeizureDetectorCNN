@@ -22,20 +22,24 @@ function [epochImage]= spatialInterpolation (spatialMap, B1, B2, B3 )
     vq2 = griddata(xProj,yProj,B2,xq,yq,'cubic');
     vq3 = griddata(xProj,yProj,B3,xq,yq,'cubic');
     
+    
+%     vq1 = normr(vq1); 
+%     vq2 = normr(vq2); 
+%     vq3 = normr(vq3); 
 
     % cat the diffrent channels to form the image
         epochImage = cat(3, vq1,vq2,vq3);
      
-    %  normalizedEpochImage 
-        normimg = uint8(zeros(size(lim3))); %// Allocate output image
+   %%  normalizedEpochImage 
+        normimg = uint8(zeros(size(epochImage))); %// Allocate output image
         for idx = 1 : 3
-            chan = lim3(:,:,idx);
+            chan = epochImage(:,:,idx);
             minvalue = min(chan(:));
             maxvalue = max(chan(:));
             normimg(:,:,idx) = uint8((chan-minvalue)*255/(maxvalue-minvalue)); %// Cast back to uint8
         end
         
-        epochImage = normimg; 
+       epochImage = rgb2hsv(uint16(epochImage));
 
 end
 
