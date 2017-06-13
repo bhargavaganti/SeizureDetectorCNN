@@ -26,6 +26,12 @@ function [epochImage]= spatialInterpolation (spatialMap, B1, B2, B3 )
 %     vq1 = normr(vq1); 
 %     vq2 = normr(vq2); 
 %     vq3 = normr(vq3); 
+% figure
+% mesh(xq,yq,vq1)
+% figure
+% mesh(xq,yq,vq2)
+% figure
+% mesh(xq,yq,vq3)
 
     % cat the diffrent channels to form the image
         epochImage = cat(3, vq1,vq2,vq3);
@@ -39,7 +45,7 @@ function [epochImage]= spatialInterpolation (spatialMap, B1, B2, B3 )
             normimg(:,:,idx) = uint8((chan-minvalue)*255/(maxvalue-minvalue)); %// Cast back to uint8
         end
         
-       epochImage = rgb2hsv(uint16(epochImage));
+       epochImage =  vq2;% rgb2hsv(uint16(epochImage));
 
 end
 

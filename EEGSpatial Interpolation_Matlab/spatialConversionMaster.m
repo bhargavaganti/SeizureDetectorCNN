@@ -8,10 +8,14 @@ Fs = 500;
 load('MetaData/matchedCoords.mat');
 
 
+%% Used for meshing the raw image together
+    % The grid to interpolate the data too
+    [xq,yq] = meshgrid(-16:.1:16, -16:.1:16);
+
 %% Have to spilt the raw data file into epochs for parsing
 
 
-    for j =  1:(length(data)/500) %this corrponds to the overall length of the data being put in
+    for j =  40:60%(length(data)/500) %this corrponds to the overall length of the data being put in
         
         endIndex = j * 500; 
         startIndex= endIndex - 499; 
@@ -26,9 +30,11 @@ load('MetaData/matchedCoords.mat');
         
          figure
          hold on
-         imshow(epochImage)
-         
+         %
+        % imshow(epochImage)
+         mesh(xq, yq, epochImage)
         
         allEpochImages{j} = epochImage;
+        
         
     end

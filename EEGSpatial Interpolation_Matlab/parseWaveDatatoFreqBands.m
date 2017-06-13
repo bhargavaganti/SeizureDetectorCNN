@@ -18,17 +18,17 @@ function [B1, B2, B3] =  parseWaveDatatoFreqBands (P1, freq)
 
         for i =1:length(freq)       
 
-                if freq(i) > 7 && B1check ==0  %pick of the index where the freq value becomes greater than 7
+                if freq(i) > 1 && B1check ==0  %pick of the index where the freq value becomes greater than 7
                        B1(2) = i-1;
                        B1check = 1;
                 end
 
-                if freq(i) >14 && B2check ==0  %pick of the index where the freq value becomes greater than 14      
+                if freq(i) > 4 && B2check ==0  %pick of the index where the freq value becomes greater than 14      
                        B2(2) = i-1;
                        B2check = 1;
                 end
 
-                if freq(i)>49 && B3check ==0  %pick of the index where the freq value becomes greater than 49
+                if freq(i)>10 && B3check ==0  %pick of the index where the freq value becomes greater than 49
                        B3(2) = i-1;
                        B3check = 1;
                 end           
