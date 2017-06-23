@@ -14,6 +14,7 @@ load('MetaData/matchedCoords.mat');
 
 %% Have to spilt the raw data file into epochs for parsing
 
+figCounter = 1;
 
     for j =  40:60%(length(data)/500) %this corrponds to the overall length of the data being put in
         
@@ -32,9 +33,14 @@ load('MetaData/matchedCoords.mat');
          hold on
          %
         % imshow(epochImage)
-         mesh(xq, yq, epochImage)
+         fig = mesh(xq, yq, epochImage);
         
-        allEpochImages{j} = epochImage;
+         figCounter = figCounter+1;
+         filename = strcat('fig',num2str(figCounter),'.png');
+         imwrite(epochImage,filename);
+         
+        allEpochImages{figCounter} = epochImage;
         
+     
         
     end
