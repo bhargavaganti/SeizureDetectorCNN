@@ -1,20 +1,13 @@
-%% Spatial Conversion Master
+%% eegVectorize
 %Titus John
-%May 4, 2017
+%Jun 26, 2017
 %%  Master script to take the parsed EEG and convert into the spatial maps of intrest
 %Input: Will be the eeg data which is matrix n x m where n is the number of
 %channels and m is the samples in the 
 
-
-
 %%  Load meta data related to epilepsy data
 Fs = 500; 
 load('MetaData/matchedCoords.mat');
-
-
-%% Used for meshing the raw image together
-    % The grid to interpolate the data too
-    [xq,yq] = meshgrid(-16:.1:16, -16:.1:16);
 
 %% Have to spilt the raw data file into epochs for parsing
 
@@ -30,16 +23,7 @@ load('MetaData/matchedCoords.mat');
         matchedEEGData2 = data(23:24,startIndex:endIndex); %  23-24 also correspond to channels being pulled
         matchedEEGData =   vertcat(matchedEEGData1, matchedEEGData2);
 
-        [epochImage] =  eegEpochtoSpatial (matchedEEGData, matchedCoords, Fs);
-        
-         figure
-         hold on
-          
-         imshow(epochImage)
-         
-%          mesh(xq, yq, epochImage)
-%         
-%         allEpochImages{j} = epochImage;
+        [B1, B2, B3] = matchedEEGtooFreq(matchedEEGData, Fs); 
         
         
     end

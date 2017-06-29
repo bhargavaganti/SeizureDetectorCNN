@@ -1,6 +1,12 @@
 % Titus John
 %  5- 11- 17
+% Matched EEG to freq data
+%% Info
+%input
+% matched EEG data to be pushed into
 
+%output
+%freq data representations of the data
 
 %% Loop through each of the channels in the matched data
 

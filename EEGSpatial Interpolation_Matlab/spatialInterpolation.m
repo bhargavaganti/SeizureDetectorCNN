@@ -23,9 +23,15 @@ function [epochImage]= spatialInterpolation (spatialMap, B1, B2, B3 )
     vq3 = griddata(xProj,yProj,B3,xq,yq,'cubic');
     
     
-%     vq1 = normr(vq1); 
-%     vq2 = normr(vq2); 
-%     vq3 = normr(vq3); 
+    %Have to normalize the values of the matricies being blended to
+    %matricies between 0 and 1
+    
+   
+    
+    
+    vq1 = normr(vq1); 
+    vq2 = normr(vq2); 
+    vq3 = normr(vq3); 
 % figure
 % mesh(xq,yq,vq1)
 % figure
@@ -37,15 +43,15 @@ function [epochImage]= spatialInterpolation (spatialMap, B1, B2, B3 )
         epochImage = cat(3, vq1,vq2,vq3);
      
    %%  normalizedEpochImage 
-        normimg = uint8(zeros(size(epochImage))); %// Allocate output image
-        for idx = 1 : 3
-            chan = epochImage(:,:,idx);
-            minvalue = min(chan(:));
-            maxvalue = max(chan(:));
-            normimg(:,:,idx) = uint8((chan-minvalue)*255/(maxvalue-minvalue)); %// Cast back to uint8
-        end
-        
-       epochImage =  vq2;% rgb2hsv(uint16(epochImage));
+%         normimg = uint8(zeros(size(epochImage))); %// Allocate output image
+%         for idx = 1 : 3
+%             chan = epochImage(:,:,idx);
+%             minvalue = min(chan(:));
+%             maxvalue = max(chan(:));
+%             normimg(:,:,idx) = uint8((chan-minvalue)*255/(maxvalue-minvalue)); %// Cast back to uint8
+%         end
+%         
+%        epochImage =  vq2;% rgb2hsv(uint16(epochImage));
 
 end
 
