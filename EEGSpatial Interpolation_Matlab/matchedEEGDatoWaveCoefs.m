@@ -16,7 +16,7 @@
 %----------------------------------------------------
 
 function [wt, period] = matchedEEGDatoWaveCoefs(matchedEEGData,Fs)
-        Norig = numel(matchedEEGData(1,:)); %get the length of the epock
+        Norig = numel(matchedEEGData(1,:)); %get the length of the epoch
         dt = 1/Fs; % sampling period
         t = 0:dt:Norig*dt-dt; % get the sampling time
       

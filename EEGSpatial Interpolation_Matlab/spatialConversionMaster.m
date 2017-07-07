@@ -27,19 +27,23 @@ figCounter = 1;
         matchedEEGData2 = data(23:24,startIndex:endIndex); %  23-24 also correspond to channels being pulled
         matchedEEGData =   vertcat(matchedEEGData1, matchedEEGData2);
 
-        [epochImage] =  eegEpochtoSpatial (matchedEEGData, matchedCoords, Fs);
         
-         figure
-         hold on
-         %
-        % imshow(epochImage)
-         fig = mesh(xq, yq, epochImage);
+        [wt, period] = matchedEEGDatoWaveCoefs(matchedEEGData,Fs); %Takes the matched EEG data and 
+         waveCoefstoStackedImage(wt, period,Fs)
         
-         figCounter = figCounter+1;
-         filename = strcat('fig',num2str(figCounter),'.png');
-         imwrite(epochImage,filename);
-         
-        allEpochImages{figCounter} = epochImage;
+%         [epochImage] =  eegEpochtoSpatial (matchedEEGData, matchedCoords, Fs);
+%         
+%          figure
+%          hold on
+%          %
+%         % imshow(epochImage)
+%          fig = mesh(xq, yq, epochImage);
+%         
+%          figCounter = figCounter+1;
+%          filename = strcat('fig',num2str(figCounter),'.png');
+%          imwrite(epochImage,filename);
+%          
+%         allEpochImages{figCounter} = epochImage;
         
      
         
