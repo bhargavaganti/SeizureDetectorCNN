@@ -26,9 +26,12 @@ figCounter = 1;
         matchedEEGData1 = data(1:19,startIndex:endIndex); % 1-19 correspond to the channels being pulled
         matchedEEGData2 = data(23:24,startIndex:endIndex); %  23-24 also correspond to channels being pulled
         matchedEEGData =   vertcat(matchedEEGData1, matchedEEGData2);
+        
+        figure
 
         
-        [wt, period] = matchedEEGDatoWaveCoefs(matchedEEGData,Fs) 
+        [wt, period] = matchedEEGDatoWaveCoefs(matchedEEGData,Fs); %Takes the matched EEG data and 
+         waveCoefstoStackedImage(wt, period,Fs)
         
 %         [epochImage] =  eegEpochtoSpatial (matchedEEGData, matchedCoords, Fs);
 %         

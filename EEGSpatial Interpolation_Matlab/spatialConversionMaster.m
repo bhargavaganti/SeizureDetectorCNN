@@ -16,7 +16,9 @@ load('MetaData/matchedCoords.mat');
 
 figCounter = 1;
 
-    for j =  40:60%(length(data)/500) %this corrponds to the overall length of the data being put in
+    for j =  1:10:80%(length(data)/500) %this corrponds to the overall length of the data being put in
+        
+         %Know at epoch 40 the seizure begins
         
         endIndex = j * 500; 
         startIndex= endIndex - 499; 
@@ -26,10 +28,12 @@ figCounter = 1;
         matchedEEGData1 = data(1:19,startIndex:endIndex); % 1-19 correspond to the channels being pulled
         matchedEEGData2 = data(23:24,startIndex:endIndex); %  23-24 also correspond to channels being pulled
         matchedEEGData =   vertcat(matchedEEGData1, matchedEEGData2);
+        
+      
 
         
         [wt, period] = matchedEEGDatoWaveCoefs(matchedEEGData,Fs); %Takes the matched EEG data and 
-         waveCoefstoStackedImage(wt, period,Fs)
+        [t,period,waveCatRows] = waveCoefstoStackedImage(wt, period,Fs);
         
 %         [epochImage] =  eegEpochtoSpatial (matchedEEGData, matchedCoords, Fs);
 %         
@@ -44,6 +48,14 @@ figCounter = 1;
 %          imwrite(epochImage,filename);
 %          
 %         allEpochImages{figCounter} = epochImage;
+
+        figure
+        imagesc(t,period, abs(waveCatRows));
+        if j <40
+            title('Non-Seizure')
+        else
+            title('Seizure')
+        end
         
      
         

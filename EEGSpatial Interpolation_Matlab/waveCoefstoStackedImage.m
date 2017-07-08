@@ -23,7 +23,7 @@
 
 
 %----------------------------------------------------
-function  waveCoefstoStackedImage(wt, period,Fs)
+function  [t,period,waveCatRows] = waveCoefstoStackedImage(wt, period,Fs)
    
     %Sampling specs
         dt = 1/Fs;
@@ -31,7 +31,6 @@ function  waveCoefstoStackedImage(wt, period,Fs)
    
     % Specify the image dimensions 
             nRows = 21;
-
         
       % This specifys the overall time array over which the data is sampled
          t = 0:dt:(Norig*dt*nRows)-dt;
@@ -43,8 +42,9 @@ function  waveCoefstoStackedImage(wt, period,Fs)
                 end
             end
 
-       % figure
-        %imagesc(t,period, abs(waveCatRows));
-
+    
+      
+        
+        
 
 end
