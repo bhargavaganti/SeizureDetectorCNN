@@ -15,6 +15,11 @@
 
 function splitMatixSaveLabeled(CaseName, ChannelNum, EpochNum, Class,Fs)
 
+
+overallSamples = lengthI(rawData
+for i =1:data 
+    
+end 
     filename = strcat(CaseName, ChannelNum, EpochNum, Class)
 
 end
