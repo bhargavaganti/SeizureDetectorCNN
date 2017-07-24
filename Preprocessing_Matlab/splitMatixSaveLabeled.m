@@ -13,14 +13,97 @@
 %files
 %%%%%%%%%%%%%%%%%%%%%%
 
-function splitMatixSaveLabeled(CaseName, ChannelNum, EpochNum, Class,Fs)
+function splitMatixSaveLabeled(data) %(CaseName, ChannelNum, EpochNum, Class,Fs)
 
 
-overallSamples = lengthI(rawData
-for i =1:data 
+%     overallSamples = length(data);
+%     timeSeconds = 1:1:(overallSamples/fs); 
     
-end 
-    filename = strcat(CaseName, ChannelNum, EpochNum, Class)
+    epochSize = 10*500; 
+    
+    sleepStartSamples = 1;
+    sleepEndSamples =  8039.693 *500; 
+    
+     numSleepEpochs = ceil((sleepEndSamples - sleepStartSamples)/500)/10
+     
+%          for i=1:numSleepEpochs
+%              sleepFilename = strcat('sleep_',num2str(i),'.mat'); 
+%              
+%             if i == 1
+%                 startSleepEpoch = sleepStartSamples
+%                 endSleepEpoch = startSleepEpoch + epochSize
+% 
+%                  %assign the data
+% %                 figure
+% %                 plot(data( startSleepEpoch: endSleepEpoch ))
+%                    sleepEpoch = data( startSleepEpoch: endSleepEpoch );
+%                    save(sleepFilename, 'sleepEpoch');
+%             end
+% 
+% 
+%                 startSleepEpoch = endSleepEpoch; 
+%                 endSleepEpoch = startSleepEpoch + epochSize; 
+% 
+%                  %assign the data
+% %                 figure
+% %                 plot(data( startSleepEpoch: endSleepEpoch ))
+%                  sleepEpoch = data( startSleepEpoch: endSleepEpoch );
+%                   save(sleepFilename, 'sleepEpoch');
+% 
+%           end
+%    
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+    
+    clinicalStartedSamples = 8039.693 *500; 
+    clinicalEndSamples = 8110.471 * 500;
+    
+    
+    
+    numSzEpochs = floor(((clinicalEndSamples - clinicalStartedSamples)/500)/10)
+    
+    for i=1:numSzEpochs
+        SZFilename = strcat('SZ_',num2str(i)); 
+        
+        if i == 1
+            startSzEpoch = clinicalStartedSamples
+            endSzEpoch = clinicalStartedSamples + epochSize
+            
+             %assign the data
+%             figure
+%             plot(data(startSzEpoch:endSzEpoch))
+
+                   SZEpoch = (data(startSzEpoch:endSzEpoch));
+                   save(SZFilename, 'SZEpoch');
+           
+        end
+           
+            
+            startSzEpoch = endSzEpoch; 
+            endSzEpoch = startSzEpoch + epochSize; 
+            
+             %assign the data
+%             figure
+%             plot(data(startSzEpoch:endSzEpoch))
+                    SZEpoch = (data(startSzEpoch:endSzEpoch));
+                   save(SZFilename, 'SZEpoch');
+            
+            
+    end
+   
+        
+        
+    
+    
+    %filename = strcat(CaseName, ChannelNum, EpochNum, Class)
 
 end
 
