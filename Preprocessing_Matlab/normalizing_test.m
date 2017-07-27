@@ -1,6 +1,6 @@
 %Normalize the set
 n = 66;
-for i = 1:66
+for i = 1:n
     filename = strcat('sleepFFT', num2str(i), '.mat');
     slfft(:,i) = importdata(filename);
 end
