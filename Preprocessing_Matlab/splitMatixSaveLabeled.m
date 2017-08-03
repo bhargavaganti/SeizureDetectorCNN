@@ -19,13 +19,19 @@ function splitMatixSaveLabeled(data) %(CaseName, ChannelNum, EpochNum, Class,Fs)
 %     overallSamples = length(data);
 %     timeSeconds = 1:1:(overallSamples/fs); 
     
-    epochSize = 10*500; 
+    epochTime = 1;%seconds
+    epochSize = epochTime*500; 
+    
+       
+    clinicalStartedSamples = 8039.693 *500; 
+    clinicalEndSamples = 8110.471 * 500;
+    
     
     sleepStartSamples = 1;
     sleepEndSamples =  8039.693 *500; 
     
-     numSleepEpochs = ceil((sleepEndSamples - sleepStartSamples)/500)/10
-     
+%     numSleepEpochs = floor(((sleepEndSamples - sleepStartSamples)/500)/epochTime)
+%      
 %          for i=1:numSleepEpochs
 %              sleepFilename = strcat('sleep_',num2str(i),'.mat'); 
 %              
@@ -54,21 +60,9 @@ function splitMatixSaveLabeled(data) %(CaseName, ChannelNum, EpochNum, Class,Fs)
 %    
      
      
-     
-     
-     
-     
-     
-     
-     
-     
+   
     
-    clinicalStartedSamples = 8039.693 *500; 
-    clinicalEndSamples = 8110.471 * 500;
-    
-    
-    
-    numSzEpochs = floor(((clinicalEndSamples - clinicalStartedSamples)/500)/10)
+    numSzEpochs = floor(((clinicalEndSamples - clinicalStartedSamples)/500)/epochTime)
     
     for i=1:numSzEpochs
         SZFilename = strcat('SZ_',num2str(i)); 
