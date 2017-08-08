@@ -25,32 +25,52 @@ figure(1)
 title('Sleep')
 hold on
 
-for n = 1:21
-        
-        currentChannel =  sleepData(n,:);
 
-        freqData = detrend( currentChannel);
-         % 256 point fft
-        y_fft = fft(freqData ,256) ;
-        % plotting of spectra
-        p  = abs(y_fft.^2) ;
-        df = Fs/Npoint_fft ;
-        ff = 0:df:Fs/2-df ;
-        %save(filename,'p');
+for  i = 1:length(sleepData)/500
+        if i ==1
+            sleepEpochs{i} = sleepData(1:21,1:500);
+        else
+            sleepEpochs{i} = sleepData(1:21,500*(i-1):500*i);
+        end
         
-        allFFT(n,:)= log(p(1:end/2)); 
+end
+
+ 
+for i =1:length(sleepEpochs)
+    currentSleepEpoch = sleepEpochs{i}; 
+    
+        for n = 1:21
+                currentChannel =  currentSleepEpoch(n,:);
+
+
+                freqData = detrend( currentChannel);
+                 % 256 point fft
+                y_fft = fft(freqData ,256) ;
+                % plotting of spectra
+                p  = abs(y_fft.^2) ;
+                df = Fs/Npoint_fft ;
+                ff = 0:df:Fs/2-df ;
+                %save(filename,'p');
+
+                allFFT(n,:)= log(p(1:end/2)); 
+
+                plot (ff,log(p(1:end/2)),'b')
+                count = count+1;
+
+        end
+    
+        for n =1:length(allFFT(1,:))
+            sleepMaxFFT(n) = max(allFFT(:,n)); 
+
+        end
+
+        plot(ff, sleepMaxFFT,'r')
         
-        plot (ff,log(p(1:end/2)),'b')
-        count = count+1;
+        allMaxFFTSleep(i,:) = sleepMaxFFT;
     
 end
 
-for n =1:length(allFFT(1,:))
-        sleepMaxFFT(n) = max(allFFT(:,n)); 
-        
-end
-    
-    plot(ff, sleepMaxFFT,'r')
+
 
 
 
@@ -61,29 +81,54 @@ figure(2)
 title('SZ')
 hold on
 
-for n = 1:21
+for  i = 1:length(szData)/500
+        if i ==1
+            szEpochs{i} = szData(1:21,1:500);
+        else
+            szEpochs{i} = szData(1:21,500*(i-1):500*i);
+        end
         
-        currentChannel =  szData(n,:);
+end
 
-        freqData = detrend( currentChannel);
-         % 256 point fft
-        y_fft = fft(freqData ,256) ;
-        % plotting of spectra
-        p  = abs(y_fft.^2) ;
-        df = Fs/Npoint_fft ;
-        ff = 0:df:Fs/2-df ;
-        %save(filename,'p');
+ 
+for i =1:length(szEpochs)
+    currentszEpoch = szEpochs{i}; 
+    
+        for n = 1:21
+                currentChannel =  currentszEpoch(n,:);
+
+
+                freqData = detrend( currentChannel);
+                 % 256 point fft
+                y_fft = fft(freqData ,256) ;
+                % plotting of spectra
+                p  = abs(y_fft.^2) ;
+                df = Fs/Npoint_fft ;
+                ff = 0:df:Fs/2-df ;
+                %save(filename,'p');
+
+                allFFT(n,:)= log(p(1:end/2)); 
+
+                plot (ff,log(p(1:end/2)),'b')
+                count = count+1;
+
+        end
+    
+        for n =1:length(allFFT(1,:))
+            szMaxFFT(n) = max(allFFT(:,n)); 
+
+        end
+
+        plot(ff, szMaxFFT,'r')
         
-        allFFT(n,:)= log(p(1:end/2)); 
-        
-        plot (ff,log(p(1:end/2)),'b')
-        count = count+1;
+        allMaxFFTsz(i,:) = szMaxFFT;
     
 end
 
-for n =1:length(allFFT(1,:))
-        szMaxFFT(n) = max(allFFT(:,n)); 
-        
+
+figure(3)
+hold on 
+for i=1: length(allMaxFFTSleep(:,1))
+    plot(ff,allMaxFFTsz(i,:),'r')
+      plot(ff,allMaxFFTSleep(i,:),'b')
 end
-    
-    plot(ff, szMaxFFT,'r')
