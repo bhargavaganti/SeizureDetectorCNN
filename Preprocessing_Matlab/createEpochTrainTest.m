@@ -20,7 +20,7 @@ function parseEpochData
     
     
 
-    for i =25:30
+    for i =27:30
         
         %Get the parts of name of the SZ files
         patientFolder = strcat('/Users/titusjohn/Documents/GitHub/SeizureClassfication/szNum',num2str(i));
@@ -69,12 +69,15 @@ function parseEpochData
          hold on
          title('SZ FFTs')
             for j =1:szEpochsNum
-                 szFileName = strcat('SZEpoch',num2str(szFileNum),'_', num2str(j) ,'.txt');
-                 rawSzData = csvread(szFileName);
-                 szMaxFFT= findMaxFFT(rawSzData,'r');
-                
-                 szFileMat = strcat(szFolderPath,'SZEpoch',num2str(szFileNum),'_', num2str(j) ,'.mat');
-                 save(szFileMat, 'szMaxFFT');
+                 szFileName = strcat('SZEpoch',num2str(szFileNum),'_', num2str(j) ,'.txt')
+                 s= dir(szFileName);
+                 if s.bytes > 100
+                     rawSzData = csvread(szFileName);
+                     szMaxFFT= findMaxFFT(rawSzData,'r');
+
+                     szFileMat = strcat(szFolderPath,'SZEpoch',num2str(szFileNum),'_', num2str(j) ,'.mat');
+                     save(szFileMat, 'szMaxFFT');
+                 end
             end
         
             
@@ -91,12 +94,15 @@ function parseEpochData
         hold on 
         title('Sleep FFTs')
             for j =1:length(r)
-                  sleepFileName = strcat('NonSZEpoch',num2str(szFileNum),'_', num2str(r(j)) ,'.txt') ;            
-                  rawSleepData = csvread(sleepFileName);
-                  sleepMaxFFT= findMaxFFT(rawSleepData,'b');
-                  
-                  sleepFileMat = strcat(sleepFolderPath,'NonSZEpoch',num2str(szFileNum),'_', num2str(r(j)) ,'.mat');             
-                   save(sleepFileMat, 'sleepMaxFFT')
+                  sleepFileName = strcat('NonSZEpoch',num2str(szFileNum),'_', num2str(r(j)) ,'.txt')     
+                  s= dir(sleepFileName);
+                  if s.bytes> 100
+                      rawSleepData = csvread(sleepFileName);
+                      sleepMaxFFT= findMaxFFT(rawSleepData,'b');
+
+                      sleepFileMat = strcat(sleepFolderPath,'NonSZEpoch',num2str(szFileNum),'_', num2str(r(j)) ,'.mat');             
+                      save(sleepFileMat, 'sleepMaxFFT')
+                  end
             end
         
     end
