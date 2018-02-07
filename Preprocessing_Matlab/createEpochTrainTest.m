@@ -13,6 +13,7 @@
 %files
 %%%%%%%%%%%%%%%%%%%%%%
 function parseEpochData
+    close all
 
     szFolderPath = strcat('/Users/titusjohn/Documents/GitHub/SeizureClassfication/szEpochs/')
     sleepFolderPath = strcat('/Users/titusjohn/Documents/GitHub/SeizureClassfication/sleepEpochs/')
@@ -20,27 +21,19 @@ function parseEpochData
     
     
 
-    for i =27:30
+    for i =27
         
         %Get the parts of name of the SZ files
         patientFolder = strcat('/Users/titusjohn/Documents/GitHub/SeizureClassfication/szNum',num2str(i));
         cd (patientFolder)
         files = dir;
-        
-       
-    
-    
-        
-        
-        
+ 
         lastFile = files(length(files)).name; 
         lastFileParts=strsplit(lastFile,'_')
-        
-        
-        
-         numFilePart = lastFileParts{1};
-         temp = strsplit(numFilePart,'Epoch');
-         szFileNum  =  temp{2};
+            
+        numFilePart = lastFileParts{1};
+        temp = strsplit(numFilePart,'Epoch');
+        szFileNum  =  temp{2};
          
          count = 1
           %Pick of the num of sz files
@@ -68,6 +61,9 @@ function parseEpochData
          figure(1)
          hold on
          title('SZ FFTs')
+         xlabel('Frequncy')
+         ylabel('Power')
+         ylim([0 25])
             for j =1:szEpochsNum
                  szFileName = strcat('SZEpoch',num2str(szFileNum),'_', num2str(j) ,'.txt')
                  s= dir(szFileName);
@@ -76,7 +72,7 @@ function parseEpochData
                      szMaxFFT= findMaxFFT(rawSzData,'r');
 
                      szFileMat = strcat(szFolderPath,'SZEpoch',num2str(szFileNum),'_', num2str(j) ,'.mat');
-                     save(szFileMat, 'szMaxFFT');
+                    % save(szFileMat, 'szMaxFFT');
                  end
             end
         
@@ -84,15 +80,16 @@ function parseEpochData
             
          %Pick of random files based on number sz files
           %10:1
-          
-            
-         r = randi([1, length(files)-szEpochsNum-10],1,szEpochsNum*10);
+          r = randi([1, length(files)-szEpochsNum-10],1,szEpochsNum*1);
         %(length(files)-szEpochsNum)
             
         
-        figure(2)
+        figure(1)
         hold on 
-        title('Sleep FFTs')
+        title('Merge FFTs')
+        xlabel('Frequncy')
+        ylabel('Power')
+        ylim([0 25])
             for j =1:length(r)
                   sleepFileName = strcat('NonSZEpoch',num2str(szFileNum),'_', num2str(r(j)) ,'.txt')     
                   s= dir(sleepFileName);
@@ -101,10 +98,18 @@ function parseEpochData
                       sleepMaxFFT= findMaxFFT(rawSleepData,'b');
 
                       sleepFileMat = strcat(sleepFolderPath,'NonSZEpoch',num2str(szFileNum),'_', num2str(r(j)) ,'.mat');             
-                      save(sleepFileMat, 'sleepMaxFFT')
+                      %save(sleepFileMat, 'sleepMaxFFT')
                   end
             end
         
+            
+      figure(3)
+      hold on 
+      title('Merged Data')
+      
+      
+      
+      
     end
     
     

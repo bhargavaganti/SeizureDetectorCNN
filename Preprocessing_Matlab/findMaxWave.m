@@ -13,7 +13,7 @@
 %files
 %%%%%%%%%%%%%%%%%%%%%%
 
-function    MaxFFT= findMaxFFT(rawData, linecolor)
+function    MaxWave= findMaxWave(rawData, linecolor)
 
 Fs = 500 ;
 duration = 0.001 ;
@@ -81,6 +81,5 @@ Npoint_fft = 256 ;
 %     plot(ff,allMaxFFTsz(i,:),'r')
 %       plot(ff,allMaxFFTSleep(i,:),'b')
 % end
-
 
 end
